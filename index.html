@@ -1,33 +1,54 @@
 <!DOCTYPE html>
-<html lang="de"> <!-- 语言改为德语 -->
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine To-Do-Liste</title> <!-- 网页标题 -->
+    <title data-i18n="pageTitle">Meine To-Do-Liste</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="app-container">
         <div class="header">
-            <h1>Meine Aufgaben</h1> <!-- 主标题：我的任务 -->
-            <p>Bleib konzentriert und erreiche deine Ziele Schritt für Schritt ✨</p> <!-- 副标题：保持专注，一步步完成目标 -->
+            <div class="header-top-row">
+                <div class="header-title-row">
+                    <h1 data-i18n="title">Meine Aufgaben</h1>
+                    <span id="currentDate" class="date-badge">Lade Datum...</span>
+                </div>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="de">DE</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="zh">中</button>
+                </div>
+            </div>
+            <p data-i18n="subtitle">Bleib konzentriert und erreiche deine Ziele Schritt für Schritt ✨</p>
         </div>
 
         <div class="input-group">
-            <input type="text" id="todoInput" placeholder="Neue Aufgabe eingeben..." autocomplete="off"> <!-- 输入框提示：输入新任务 -->
-            <button id="addBtn">Hinzufügen</button> <!-- 按钮：添加 -->
+            <input type="text" id="todoInput" data-i18n-attr="placeholder" data-i18n="inputPlaceholder" placeholder="Neue Aufgabe eingeben..." autocomplete="off">
+            <button id="addBtn" data-i18n="addBtn">Hinzufügen</button>
         </div>
 
         <ul id="todoList">
-            <!-- 任务将动态添加到这里 -->
             <li class="empty-state" id="emptyState">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
-                <div>Noch keine Aufgaben. Füge eine hinzu, um zu beginnen!</div> <!-- 空状态提示：暂无任务，添加一个开始吧 -->
+                <div data-i18n="emptyState">Noch keine Aufgaben. Füge eine hinzu, um zu beginnen!</div>
             </li>
         </ul>
+
+        <div class="footer-controls" id="footerControls" style="display: none;">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all" data-i18n="filterAll">Alle</button>
+                <button class="filter-btn" data-filter="active" data-i18n="filterActive">Offen</button>
+                <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted">Erledigt</button>
+            </div>
+            <div class="footer-actions">
+                <span id="items-left">0 Aufgaben übrig</span>
+                <button id="clearCompletedBtn" class="clear-btn" data-i18n="clearCompleted">Erledigte löschen</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
