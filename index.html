@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de"> <!-- 语言改为德语 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine To-Do-Liste</title> <!-- 网页标题 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="header">
+            <h1>Meine Aufgaben</h1> <!-- 主标题：我的任务 -->
+            <p>Bleib konzentriert und erreiche deine Ziele Schritt für Schritt ✨</p> <!-- 副标题：保持专注，一步步完成目标 -->
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Neue Aufgabe eingeben..." autocomplete="off"> <!-- 输入框提示：输入新任务 -->
+            <button id="addBtn">Hinzufügen</button> <!-- 按钮：添加 -->
+        </div>
+
+        <ul id="todoList">
+            <!-- 任务将动态添加到这里 -->
+            <li class="empty-state" id="emptyState">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <div>Noch keine Aufgaben. Füge eine hinzu, um zu beginnen!</div> <!-- 空状态提示：暂无任务，添加一个开始吧 -->
+            </li>
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
