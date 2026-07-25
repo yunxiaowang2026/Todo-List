@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="pageTitle">Meine To-Do-Liste</title>
     <link rel="stylesheet" href="style.css">
+    <!-- 关联 PWA 清单 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <!-- 优化 iOS Safari 体验 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="To-Do">
+    <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
@@ -52,5 +60,15 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('Service Worker 注册成功！'))
+                .catch(err => console.log('注册失败：', err));
+            });
+        }
+    </script>
+    
 </body>
 </html>
