@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title data-i18n="pageTitle">Meine To-Do-Liste</title>
     <link rel="stylesheet" href="style.css">
-    <!-- 关联 PWA 清单 -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6366f1">
-    <!-- 优化 iOS Safari 体验 -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="To-Do">
-    <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
@@ -34,7 +28,7 @@
 
         <div class="input-group">
             <input type="text" id="todoInput" data-i18n-attr="placeholder" data-i18n="inputPlaceholder" placeholder="Neue Aufgabe eingeben..." autocomplete="off">
-            <button id="addBtn" data-i18n="addBtn">Hinzufügen</button>
+            <button id="addBtn" data-i18n-attr="title" data-i18n="addBtn">+</button>
         </div>
 
         <ul id="todoList">
@@ -49,7 +43,7 @@
         <div class="footer-controls" id="footerControls" style="display: none;">
             <div class="filters">
                 <button class="filter-btn active" data-filter="all" data-i18n="filterAll">Alle</button>
-                <button class="filter-btn" data-filter="active" data-i18n="filterActive">Offen</button>
+                <button class="filter-btn" data-filter="active" data-i18n="filterActive">Aktiv</button>
                 <button class="filter-btn" data-filter="completed" data-i18n="filterCompleted">Erledigt</button>
             </div>
             <div class="footer-actions">
@@ -59,7 +53,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

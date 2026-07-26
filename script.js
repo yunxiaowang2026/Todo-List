@@ -12,9 +12,6 @@ const langBtns = document.querySelectorAll('.lang-btn');
 const STORAGE_KEY = 'todo-app-tasks';
 const LANG_KEY = 'todo-app-lang';
 
-// ==========================================
-// 1. 国际化 (i18n) 字典
-// ==========================================
 const translations = {
     de: {
         pageTitle: "Meine To-Do-Liste", title: "Meine Aufgaben",
@@ -32,8 +29,8 @@ const translations = {
         subtitle: "Stay focused and achieve your goals step by step ✨",
         inputPlaceholder: "Enter a new task...", addBtn: "Add",
         emptyState: "No tasks yet. Add one to get started!",
-        filterAll: "All", filterActive: "To-do", filterCompleted: "Done",
-        clearCompleted: "Clear Done",
+        filterAll: "All", filterActive: "Active", filterCompleted: "Completed",
+        clearCompleted: "Clear Completed",
         itemsLeft_singular: "item left", itemsLeft_plural: "items left",
         editTitle: "Edit", deleteTitle: "Delete", saveTitle: "Save", cancelTitle: "Cancel",
         dragHandleTitle: "Drag to reorder", dateLoading: "Loading date..."
@@ -43,7 +40,7 @@ const translations = {
         subtitle: "保持专注，一步步实现你的目标 ✨",
         inputPlaceholder: "输入新任务...", addBtn: "添加",
         emptyState: "暂无任务。添加一个开始吧！",
-        filterAll: "全部", filterActive: "待办", filterCompleted: "已完成",
+        filterAll: "全部", filterActive: "进行中", filterCompleted: "已完成",
         clearCompleted: "清除已完成",
         itemsLeft_singular: "项未完成", itemsLeft_plural: "项未完成",
         editTitle: "编辑", deleteTitle: "删除", saveTitle: "保存", cancelTitle: "取消",
@@ -51,9 +48,6 @@ const translations = {
     }
 };
 
-// ==========================================
-// 2. 状态管理 (State)
-// ==========================================
 let todos = [];
 let currentFilter = 'all'; 
 let editingId = null; 
@@ -64,14 +58,9 @@ function t(key) {
     return translations[currentLang]?.[key] || translations['de'][key] || key;
 }
 
-// 安全获取目标元素，防止点击到文本节点时 e.target.closest 报错
 function getTargetElement(e) {
     return e.target.nodeType === Node.ELEMENT_NODE ? e.target : e.target.parentElement;
 }
-
-// ==========================================
-// 3. 核心功能函数
-// ==========================================
 
 function init() {
     const savedData = localStorage.getItem(STORAGE_KEY);
@@ -95,6 +84,13 @@ function init() {
     updateLangUI();
     updateDate();
     renderTasks();
+    // 【新增】强制修改按钮为加号
+    const addBtn = document.getElementById('addBtn');
+    if (addBtn) {
+        addBtn.innerHTML = '+';
+        addBtn.style.fontSize = '28px';
+        addBtn.style.fontWeight = '300';
+    }
 }
 
 function applyStaticTranslations() {
@@ -143,7 +139,6 @@ function renderTasks() {
             li.className = `task-item ${todo.completed ? 'completed' : ''}`;
             li.dataset.id = todo.id;
             
-            // 【关键修复】不再给 li 设置 draggable，而是给手柄设置
             const isDraggable = todo.id !== editingId;
 
             if (todo.id === editingId) {
@@ -159,7 +154,6 @@ function renderTasks() {
                 }, 0);
             } else {
                 li.innerHTML = `
-                    <!-- 【关键修复】draggable 属性只加在 .drag-handle 上 -->
                     <div class="drag-handle" draggable="${isDraggable}" title="${t('dragHandleTitle')}">⠿</div>
                     <input type="checkbox" class="toggle-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="task-text">${todo.text}</span>
@@ -185,10 +179,6 @@ function updateFooter() {
     itemsLeftLabel.textContent = `${activeCount} ${t(textKey)}`;
     clearCompletedBtn.style.display = completedCount > 0 ? 'block' : 'none';
 }
-
-// ==========================================
-// 4. 业务逻辑 (Actions)
-// ==========================================
 
 function addTask() {
     const text = todoInput.value.trim();
@@ -259,14 +249,9 @@ function switchLanguage(lang) {
     renderTasks();
 }
 
-// ==========================================
-// 5. 事件绑定 (Event Delegation)
-// ==========================================
-
 addBtn.addEventListener('click', addTask);
 todoInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') addTask(); });
 
-// 点击事件委托
 todoList.addEventListener('click', (e) => {
     const targetEl = getTargetElement(e);
     const li = targetEl.closest('.task-item');
@@ -289,17 +274,15 @@ todoList.addEventListener('keydown', (e) => {
     }
 });
 
-// 【核心修复】拖拽事件
 todoList.addEventListener('dragstart', (e) => {
-    // 因为 draggable 只加在了 .drag-handle 上，所以 e.target 就是手柄
     const handle = e.target.closest('.drag-handle');
-    if (!handle) return; // 如果不是从手柄开始，直接忽略
+    if (!handle) return;
     
     const li = handle.closest('.task-item');
     if (!li || li.classList.contains('fade-out')) return;
     
     draggedId = Number(li.dataset.id);
-    li.classList.add('dragging'); // 给整个 li 加上半透明样式
+    li.classList.add('dragging');
     
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', draggedId); 
@@ -355,7 +338,4 @@ filterBtns.forEach(btn => btn.addEventListener('click', () => setFilter(btn.data
 clearCompletedBtn.addEventListener('click', clearCompleted);
 langBtns.forEach(btn => btn.addEventListener('click', () => switchLanguage(btn.dataset.lang)));
 
-// ==========================================
-// 6. 启动应用
-// ==========================================
 init();
