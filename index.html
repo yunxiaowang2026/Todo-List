@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 【新增】禁止缓存，确保每次加载最新代码, 以后要删除-->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title data-i18n="pageTitle">Meine To-Do-Liste</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
 
@@ -28,7 +33,7 @@
 
         <div class="input-group">
             <input type="text" id="todoInput" data-i18n-attr="placeholder" data-i18n="inputPlaceholder" placeholder="Neue Aufgabe eingeben..." autocomplete="off">
-            <button id="addBtn" data-i18n-attr="title" data-i18n="addBtn">+</button>
+            <button id="addBtn" data-i18n-attr="title" title="Hinzufügen">+</button>
         </div>
 
         <ul id="todoList">
@@ -53,7 +58,7 @@
         </div>
     </div>
 
-    <script src="script.js?v=2"></script>
+    <script src="src/script.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

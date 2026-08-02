@@ -94,12 +94,25 @@ function init() {
 }
 
 function applyStaticTranslations() {
-    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.getAttribute('data-i18n')));
+    // 处理文本内容（排除 addBtn）
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        if (el.id !== 'addBtn') { // 【关键】跳过 addBtn
+            el.textContent = t(el.getAttribute('data-i18n'));
+        }
+    });
+    
+    // 处理属性（如 placeholder、title）
     document.querySelectorAll('[data-i18n-attr]').forEach(el => {
         const attr = el.getAttribute('data-i18n-attr');
         const key = el.getAttribute('data-i18n');
-        if (key) el.setAttribute(attr, t(key));
+        if (key) {
+            el.setAttribute(attr, t(key));
+        } else if (el.id === 'addBtn') {
+            // 特殊处理 addBtn 的 title
+            el.setAttribute('title', t('addBtn'));
+        }
     });
+    
     document.documentElement.lang = currentLang;
 }
 
